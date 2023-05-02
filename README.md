@@ -20,15 +20,15 @@ Each service is responsible for a specific functionality and communicates with o
 
 ### Solution Architecture
 
-![Screenshot 2023-04-29 at 8.22.35 AM.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fzw%2F10_qmd7j7z17296vgj8yj8qw0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_2eH8oc%2FScreenshot%202023-04-29%20at%208.22.35%20AM.png)
+![Solution Architecture](https://user-images.githubusercontent.com/60222871/235648774-543b4f4d-1ba8-425d-a9e7-d2d53b7d9f54.png)
 
 ### Logical Architecture
 
-![Screenshot 2023-04-29 at 8.23.38 AM.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fzw%2F10_qmd7j7z17296vgj8yj8qw0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_KPGWUv%2FScreenshot%202023-04-29%20at%208.23.38%20AM.png)
+![Logical Architecture](https://user-images.githubusercontent.com/60222871/235648813-0b644998-c60a-4223-975d-31576195e144.png)
 
 ## Http Client
 
-![Screenshot 2023-04-29 at 8.24.41 AM.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fzw%2F10_qmd7j7z17296vgj8yj8qw0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_fyfKG3%2FScreenshot%202023-04-29%20at%208.24.41%20AM.png)
+![Inter Process Communication](https://user-images.githubusercontent.com/60222871/235648842-f29b147d-8646-4096-bc65-94021ce0258c.png)
 
 ### Synchronous Communication
 
