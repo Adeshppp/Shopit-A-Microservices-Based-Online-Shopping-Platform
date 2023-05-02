@@ -13,3 +13,7 @@ public class WebClientConfig {
         return WebClient.builder().build();
     }
 }
+
+
+
+// note: to use WebClient class I have added spring web flux dependancy for maven.

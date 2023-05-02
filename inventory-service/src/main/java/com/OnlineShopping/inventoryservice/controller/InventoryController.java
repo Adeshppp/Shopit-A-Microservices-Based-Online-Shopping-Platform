@@ -20,8 +20,8 @@ public class InventoryController {
     // Path parameter
     // http://localhost:8082/api/inventory/iphone-14,iphone-13
 
-    // RequestBody parameter
-    // http://localhost:8082/api/inventory?sku-code=iphone-14&sku-code=iphone-13
+    // Request parameter
+    // http://localhost:8082/api/inventory?skuCode=iphone-14&skuCode=iphone-13
 
 
     // This endpoint can be called from the Order Service to check the availability of a product.
