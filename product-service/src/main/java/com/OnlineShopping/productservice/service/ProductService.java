@@ -26,6 +26,8 @@ public class ProductService {
 
         productRepository.save(product);
 
+        // todo: call updateProductsInInventory() in inventory micro service
+
 //        log.info("Product "+product.getId()+" is saved");
         log.info("Product {} is saved", product.getId()); //places the value dynamically by using Slf4j
     }

@@ -30,6 +30,8 @@ public class InventoryService {
                 )
                 .toList();
     }
+
+
 }
 
 // todo: can perform this operation more specific by checking the order quantity as well with the available stock.

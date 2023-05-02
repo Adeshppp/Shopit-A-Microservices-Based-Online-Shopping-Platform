@@ -14,6 +14,8 @@ public class InventoryServiceApplication {
 		SpringApplication.run(InventoryServiceApplication.class, args);
 	}
 
+
+//	hard code to feed data manually
 		@Bean
 		public CommandLineRunner loadData(InventoryRepository inventoryRepository){
 			return args -> {

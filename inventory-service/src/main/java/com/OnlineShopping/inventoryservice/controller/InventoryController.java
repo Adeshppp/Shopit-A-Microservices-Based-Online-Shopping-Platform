@@ -31,4 +31,8 @@ public class InventoryController {
         return inventoryService.isInStock(skuCode);
     }
 
+    // todo: updateProductsInInventory() : add products in inventory which are newly added in products list.
+
+    // todo: add update stock functionality and in service class place checkpoint to verify the product
+
 }

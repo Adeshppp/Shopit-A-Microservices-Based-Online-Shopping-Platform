@@ -28,4 +28,6 @@ public class ProductController {
     public List<ProductResponse> getAllProducts(){
         return productService.getAllProducts();
     }
+
+    // todo: add method to uodate the price of the product
 }
