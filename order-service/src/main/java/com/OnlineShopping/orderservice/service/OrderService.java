@@ -27,7 +27,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     // By default, WebClient makes asynchronous requests.
-    private final WebClient webClient;
+    private final WebClient.Builder webClientBuilder;
 
     public void placeOrder(OrderRequest orderRequest){
         Order order = new Order();
@@ -48,8 +48,8 @@ public class OrderService {
 
         // In the Inventory Service Controller class, there is a GET method called isInStock() that returns a Boolean value.
         // This method is running on port 8082.
-        InventoryResponse[] inventoryResponseArray = webClient.get()
-                .uri("http://localhost:8082/api/inventory", uriBuilder -> uriBuilder.queryParam("skuCode",skuCodes).build())//skuCodes is a List of skuCode so uriBuilder, which will build uri in this format "http://localhost:8082/api/inventory?skuCode=iphone-14&skuCode=iphone-13"
+        InventoryResponse[] inventoryResponseArray = webClientBuilder.build().get()
+                .uri("http://inventory-service/api/inventory", uriBuilder -> uriBuilder.queryParam("skuCode",skuCodes).build())//skuCodes is a List of skuCode so uriBuilder, which will build uri in this format "http://localhost:8082/api/inventory?skuCode=iphone-14&skuCode=iphone-13"
                 .retrieve() // Perform HTTP request and retrieve response body
                 .bodyToMono(InventoryResponse[].class) // Convert the HTTP response body to a Mono of type InventoryResponse
                 .block(); // Make the WebClient request synchronous and block the execution until the response is received.

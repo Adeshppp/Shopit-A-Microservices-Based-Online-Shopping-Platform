@@ -50,6 +50,30 @@ so we are using WebClient.
 
 If Order service requests Inventory service and does not care about response then It is called as Asynchronous communication. It follows fire and forget pattern.
 
+## Service Discovery Using Netflix Eureka
+
+In order to maintain multiple instances of a microservices Netflix Eureka is used. as it helps to each client microservice to maintain local registry.
+
+![Screenshot 2023-05-06 at 6 29 38 AM](https://user-images.githubusercontent.com/60222871/236623539-5add7e23-6370-41cb-84b2-a58d97b5d75f.png)
+
+In above examplemultiple instances are there and each instance have dynamic IP address. In this case order service don't know to which instance to call. Here **Service Discovery Pattern** comes into picture.
+
+![Screenshot 2023-05-06 at 6 33 16 AM](https://user-images.githubusercontent.com/60222871/236623675-5f8fc695-b461-4ecc-b392-3b2ea47f38de.png)
+
+After creation of each instance, it will get configured with the Discovery server and that server will add that instance as aclient in its registry.
+
+
+### How it works:
+
+On creation of instance, it will get configured with discovery client and if another microservice wants to use that microservice then discovery server let that microservice know that which instance to route.
+
+![Screenshot 2023-05-06 at 6 34 26 AM](https://user-images.githubusercontent.com/60222871/236623775-04762b18-f94f-4817-a9f2-f712d37325e4.png)
+
+In case of failure of Discovery Server, once communicated each microservice also keeps local registry about other microservice's instances.
+as use that list to connect to that perticular service.
+
+![Screenshot 2023-05-06 at 6 38 57 AM](https://user-images.githubusercontent.com/60222871/236624024-91cdb7f2-3f9d-4ff1-b9c7-3ab980a813e6.png)
+
 
 ## Getting Started
 
