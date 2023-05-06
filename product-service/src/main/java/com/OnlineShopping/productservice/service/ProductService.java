@@ -2,6 +2,7 @@ package com.OnlineShopping.productservice.service;
 
 import com.OnlineShopping.productservice.dto.ProductRequest;
 import com.OnlineShopping.productservice.dto.ProductResponse;
+import com.OnlineShopping.productservice.dto.UpdatePriceRequest;
 import com.OnlineShopping.productservice.model.Product;
 import com.OnlineShopping.productservice.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor // it will create a parameterized constructor with required parameters
@@ -44,5 +46,16 @@ public class ProductService {
                 .description(product.getDescription())
                 .price(product.getPrice())
                 .build();
+    }
+
+    public void updatePrice(UpdatePriceRequest updatePriceRequest) {
+        Optional<Product> product = productRepository.findById(updatePriceRequest.getId());
+        Product updatedProduct = product.get();
+        if(product.isPresent()){
+            updatedProduct.setPrice(updatePriceRequest.getPrice());
+            productRepository.save(updatedProduct);
+            log.info("Product {} price is updated to {}", updatedProduct.getName(),updatePriceRequest.getPrice());
+        }
+        else log.error("Product with id {} not found!!!", updatePriceRequest.getId());
     }
 }
