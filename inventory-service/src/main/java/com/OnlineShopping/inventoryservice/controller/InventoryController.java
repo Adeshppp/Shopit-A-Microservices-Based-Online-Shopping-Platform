@@ -42,6 +42,5 @@ public class InventoryController {
         inventoryService.addStock(productRequest);
     }
 
-    // todo: add update stock functionality and in service class place checkpoint to verify the product
 
 }

@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
@@ -32,14 +33,14 @@ public class ProductService {
 
         productRepository.save(product);
 
-        // todo: call AddProductInInventory() in inventory micro service\
+        // call AddProductInInventory() in inventory micro-service
         WebClient webClient = WebClient.create("http://localhost:8082/api/inventory");
         ProductToInventoryRequest productToInventoryRequest = new ProductToInventoryRequest();
         productToInventoryRequest.setSkuCode(productRequest.getName());
         webClient.post()// post request
                 .contentType(MediaType.APPLICATION_JSON)// set the content type of the request to JSON
                 .body(BodyInserters.fromValue(productToInventoryRequest))// set the request body using the BodyInserters utility class
-                .exchange()// to make the request
+                .exchangeToMono(ClientResponse::toBodilessEntity)// to make the request
                 .block();//  to wait for the response
 //        log.info("Product "+product.getId()+" is saved");
         log.info("Product {} is saved", product.getId()); //places the value dynamically by using Slf4j
