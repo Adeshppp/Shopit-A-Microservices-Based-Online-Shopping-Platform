@@ -2,12 +2,16 @@ package com.OnlineShopping.productservice.service;
 
 import com.OnlineShopping.productservice.dto.ProductRequest;
 import com.OnlineShopping.productservice.dto.ProductResponse;
+import com.OnlineShopping.productservice.dto.ProductToInventoryRequest;
 import com.OnlineShopping.productservice.dto.UpdatePriceRequest;
 import com.OnlineShopping.productservice.model.Product;
 import com.OnlineShopping.productservice.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,8 +32,15 @@ public class ProductService {
 
         productRepository.save(product);
 
-        // todo: call updateProductsInInventory() in inventory micro service
-
+        // todo: call AddProductInInventory() in inventory micro service\
+        WebClient webClient = WebClient.create("http://localhost:8082/api/inventory");
+        ProductToInventoryRequest productToInventoryRequest = new ProductToInventoryRequest();
+        productToInventoryRequest.setSkuCode(productRequest.getName());
+        webClient.post()// post request
+                .contentType(MediaType.APPLICATION_JSON)// set the content type of the request to JSON
+                .body(BodyInserters.fromValue(productToInventoryRequest))// set the request body using the BodyInserters utility class
+                .exchange()// to make the request
+                .block();//  to wait for the response
 //        log.info("Product "+product.getId()+" is saved");
         log.info("Product {} is saved", product.getId()); //places the value dynamically by using Slf4j
     }

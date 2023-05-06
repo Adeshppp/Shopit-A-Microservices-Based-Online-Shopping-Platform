@@ -32,6 +32,7 @@ public class ProductController {
 
     // todo: add method to uodate the price of the product
     @PutMapping
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public void updatePrice(@RequestBody UpdatePriceRequest updatePriceRequest){
         productService.updatePrice(updatePriceRequest);
     }
