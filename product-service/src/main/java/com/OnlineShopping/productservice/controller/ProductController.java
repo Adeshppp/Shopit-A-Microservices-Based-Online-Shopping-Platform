@@ -3,6 +3,7 @@ package com.OnlineShopping.productservice.controller;
 
 import com.OnlineShopping.productservice.dto.ProductRequest;
 import com.OnlineShopping.productservice.dto.ProductResponse;
+import com.OnlineShopping.productservice.dto.UpdatePriceRequest;
 import com.OnlineShopping.productservice.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,4 +31,9 @@ public class ProductController {
     }
 
     // todo: add method to uodate the price of the product
+    @PutMapping
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void updatePrice(@RequestBody UpdatePriceRequest updatePriceRequest){
+        productService.updatePrice(updatePriceRequest);
+    }
 }

@@ -1,4 +1,4 @@
-package com.OnlineShopping.orderservice.dto;
+package com.OnlineShopping.inventoryservice.dto;
 
 
 import lombok.AllArgsConstructor;
@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-// added from inventory's dto package
-public class InventoryResponse {
+public class ProductRequest {
     private String skuCode;
-    private Integer availableStock;
+    private Integer quantity;
 }
