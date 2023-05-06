@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 // added from inventory's dto package
 public class InventoryResponse {
     private String skuCode;
-    private boolean isInStock;
+    private Integer availableStock;
 }

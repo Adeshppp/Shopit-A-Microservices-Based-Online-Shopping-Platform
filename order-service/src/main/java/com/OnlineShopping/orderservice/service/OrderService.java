@@ -8,15 +8,16 @@ import com.OnlineShopping.orderservice.model.Order;
 import com.OnlineShopping.orderservice.model.OrderLineItems;
 import com.OnlineShopping.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional //spring will automatically create and commit the transactions
@@ -38,6 +39,8 @@ public class OrderService {
                 .toList();
         order.setOrderLineItemsList(orderLineItems);
 
+        log.info("order : "+order);
+
         // collecting product skuCode from order object
         List<String> skuCodes = order.getOrderLineItemsList().stream().map(OrderLineItems::getSkuCode).toList();
 
@@ -52,13 +55,18 @@ public class OrderService {
                 .block(); // Make the WebClient request synchronous and block the execution until the response is received.
 
 
-        boolean allProductsInStock = Arrays.stream(inventoryResponseArray).allMatch(InventoryResponse::isInStock);
+//        boolean allProductsInStock = Arrays.stream(inventoryResponseArray).allMatch(InventoryResponse::isInStock);
+        for(InventoryResponse response:inventoryResponseArray)
 
-        if(allProductsInStock) {
+        log.info("inventoryResponseArray :"+inventoryResponseArray);
+
+//      todo: check available stock for each product and post on log if not available
+//
+//        if(allProductsInStock) {
             orderRepository.save(order);
-            // todo: update inventory as well
-        }
-        else throw new IllegalArgumentException("Product not in stock, please try again later.");
+//            // todo: update inventory as well
+//        }
+//        else throw new IllegalArgumentException("Product not in stock, please try again later.");
 
         // ==========================================================================================================================
     }
@@ -70,6 +78,5 @@ public class OrderService {
         orderLineItems.setSkuCode(orderLineItemsDto.getSkuCode());
         return orderLineItems;
     }
-
 
 }
