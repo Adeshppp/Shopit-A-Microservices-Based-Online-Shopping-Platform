@@ -50,7 +50,7 @@ so we are using WebClient.
 
 If Order service requests Inventory service and does not care about response then It is called as Asynchronous communication. It follows fire and forget pattern.
 
-## Service Discovery Using Netflix Eureka
+## Service Discovery Using Netflix Eureka : To create instances of microservice
 
 In order to maintain multiple instances of a microservices Netflix Eureka is used. as it helps to each client microservice to maintain local registry.
 
@@ -74,6 +74,17 @@ as use that list to connect to that perticular service.
 
 ![Screenshot 2023-05-06 at 6 38 57 AM](https://user-images.githubusercontent.com/60222871/236624024-91cdb7f2-3f9d-4ff1-b9c7-3ab980a813e6.png)
 
+## API Gateway : Single entry point for external consumers to access the microservices in the system
+
+<img width="1059" alt="Screenshot 2023-05-08 at 10 25 19 AM" src="https://user-images.githubusercontent.com/60222871/236850191-9128f29d-8257-44bf-a597-017f7d8e63be.png">
+
+To call particular service we need to call that service on arbitrary port for example 8080, 8081, 8082. This should be good in development environment but in Production environment this won't work as there could be many instances of one service. here API gateway comes in a picture.
+
+<img width="1090" alt="Screenshot 2023-05-08 at 10 27 16 AM" src="https://user-images.githubusercontent.com/60222871/236850457-780cce80-ca85-4e1e-8324-c58d5db368d8.png">
+
+In this project, we are going to user spring cloud's own implementation of API gateway called "[Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway)".
+
+We can modify request in API gateway by using filters.
 
 ## Getting Started
 
