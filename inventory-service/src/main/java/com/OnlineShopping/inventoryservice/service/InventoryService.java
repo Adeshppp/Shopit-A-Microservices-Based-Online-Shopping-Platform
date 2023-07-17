@@ -1,6 +1,5 @@
 package com.OnlineShopping.inventoryservice.service;
 
-
 import com.OnlineShopping.inventoryservice.dto.InventoryResponse;
 import com.OnlineShopping.inventoryservice.dto.ProductRequest;
 import com.OnlineShopping.inventoryservice.model.Inventory;
@@ -20,7 +19,6 @@ public class InventoryService {
 
     @Autowired
     private final InventoryRepository inventoryRepository;
-
 
     @Transactional(readOnly = true)
     public List<InventoryResponse> isInStock(List<String> skuCode){

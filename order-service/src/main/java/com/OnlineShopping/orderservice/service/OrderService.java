@@ -56,7 +56,6 @@ public class OrderService {
 
 
 //        boolean allProductsInStock = Arrays.stream(inventoryResponseArray).allMatch(InventoryResponse::isInStock);
-        for(InventoryResponse response:inventoryResponseArray)
 
         log.info("inventoryResponseArray :"+inventoryResponseArray);
 

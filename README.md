@@ -78,6 +78,8 @@ as use that list to connect to that perticular service.
 
 <img width="1059" alt="Screenshot 2023-05-08 at 10 25 19 AM" src="https://user-images.githubusercontent.com/60222871/236850191-9128f29d-8257-44bf-a597-017f7d8e63be.png">
 
+### Need:
+
 To call particular service we need to call that service on arbitrary port for example 8080, 8081, 8082. This should be good in development environment but in Production environment this won't work as there could be many instances of one service. here API gateway comes in a picture.
 
 <img width="1090" alt="Screenshot 2023-05-08 at 10 27 16 AM" src="https://user-images.githubusercontent.com/60222871/236850457-780cce80-ca85-4e1e-8324-c58d5db368d8.png">
@@ -85,6 +87,13 @@ To call particular service we need to call that service on arbitrary port for ex
 In this project, we are going to user spring cloud's own implementation of API gateway called "[Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway)".
 
 We can modify request in API gateway by using filters.
+
+Along with **routing**, it also provides additional cost cutting concerns as below:
+
+1. Authentication  
+2. Security : Keycloak
+3. Load Balancing : to manage multiple instances of service
+4. SSL Termination : terminates https calls at API Gateway leyer
 
 ## Getting Started
 
