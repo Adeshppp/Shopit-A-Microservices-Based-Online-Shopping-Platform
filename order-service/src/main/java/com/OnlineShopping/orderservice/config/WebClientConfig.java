@@ -17,5 +17,5 @@ public class WebClientConfig {
 }
 
 
-
+// by using webclient.builder, I am enabling client side load-balancing.
 // note: to use WebClient class I have added spring web flux dependency for maven.

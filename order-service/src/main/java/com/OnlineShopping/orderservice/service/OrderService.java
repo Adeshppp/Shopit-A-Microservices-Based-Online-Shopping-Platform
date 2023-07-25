@@ -63,7 +63,7 @@ public class OrderService {
 //
 //        if(allProductsInStock) {
             orderRepository.save(order);
-//            // todo: update inventory as well
+            // todo: update inventory
 //        }
 //        else throw new IllegalArgumentException("Product not in stock, please try again later.");
 
