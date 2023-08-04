@@ -99,7 +99,37 @@ This will start Keycloak locally with the specified configuration, including the
 
 Please note that using Docker is recommended for consistency and ease of deployment across various environments. However, the alternate method provides flexibility for specific use cases or preferences.
 
+## Authentication Mechanism for Discovery Server
 
+In our microservices architecture, we have successfully implemented an authentication mechanism using Keycloak for our order and product services. However, we have yet to configure authentication for our discovery server. The reason is that the discovery server is accessed through a web browser, not through a tool like Postman, which allows us to add authentication parameters easily.
+
+To address this, we will enable basic authentication for the discovery server. Basic authentication allows us to provide a username and password when accessing the discovery server's URL. This way, we can secure access to the server without the need for complex token-based authentication like in the other services.
+
+### Setting up Basic Authentication for Discovery Server
+
+To enable basic authentication for the discovery server, follow these steps:
+
+1. Open the configuration file of the discovery server (e.g., application.properties).
+
+2. Add the following properties to enable basic authentication:
+
+#### Enable basic authentication
+
+spring.security.user.name=your_username
+
+spring.security.user.password=your_password
+
+Replace your_username and your_password with the desired credentials. The ROLE_USER specifies the role assigned to the authenticated user.
+
+Save the changes and restart the discovery server for the new configuration to take effect.
+
+### Accessing the Discovery Server
+
+After enabling basic authentication, when you access the discovery server's URL through a web browser, you will be prompted to enter the username and password. Upon successful authentication, you will be granted access to the discovery server's information and endpoints.
+
+Please note that basic authentication is suitable for browser-based access but may not be ideal for programmatic access or API calls. For API calls, we recommend continuing to use the Keycloak-based authentication in the order and product services, as it provides more robust security features.
+
+With basic authentication in place for the discovery server, our microservices architecture will be better protected against unauthorized access, ensuring a more secure environment for our applications.
 
 ## Contributing
 
@@ -109,5 +139,6 @@ We welcome contributions to improve and expand the functionality of this microse
 Let's secure our microservices with Keycloak and build a safer and more reliable system together!
 
 
+## Authentication mechanism for discovery server
 
 
