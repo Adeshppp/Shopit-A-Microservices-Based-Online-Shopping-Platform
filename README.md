@@ -69,21 +69,44 @@ In the development environment, calling a particular service on arbitrary ports 
 
 In this project, we use Spring Cloud's own implementation of an API gateway called "[Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway)". It allows modifying requests using filters and provides additional concerns like authentication, security (Keycloak), load balancing for multiple service instances, and SSL termination for terminating HTTPS calls at the API Gateway layer.
 
-## Getting Started
+## Keycloak : Securing Microservices Architecture
 
-To get started with the application, follow these steps:
+This repository demonstrates the implementation of Keycloak as an authorization server to secure microservices in our architecture. Prior to integrating Keycloak, all services were accessible without any authentication, which posed security risks. By utilizing Keycloak, we have fortified the system with robust authentication and authorization mechanisms.
 
-1. Clone the repository
-2. Install the required dependencies
-3. Start each service using the provided scripts
-4. Access the application at http://localhost:8080
+### Getting Started
+To run Keycloak, we recommend using Docker, which simplifies the setup process. Follow these steps:
 
-For detailed instructions on setting up and running the application, please refer to the Installation Guide.
+1. Ensure you have Docker installed on your system.
+
+2. Open a terminal and execute the following command to run the Keycloak container: 
+
+    docker run -p 9090:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:22.0.1 start-dev
+   
+   This command will pull the Keycloak image from Docker Hub and start the Keycloak server. It also sets up the admin user with the provided credentials (admin/admin in this case). Adjust the version number in the image tag if needed.
+
+### Alternate Method (Local installation):
+If you prefer not to use Docker, you can download the Keycloak zip file for your operating system from the official Keycloak website. Follow these steps:
+
+1. Download the appropriate Keycloak zip file for your operating system.
+
+2. Unzip the downloaded file and locate the keycloak.conf file inside the conf folder.
+
+3. Open the keycloak.conf file and modify the http-port property at the end of the file to set your desired port, for example: http-port=9090
+
+4. Start Keycloak by executing the following command in the downloaded folder: sudo bin/kc.sh start-dev
+
+This will start Keycloak locally with the specified configuration, including the custom port (9090 in the example).
+
+Please note that using Docker is recommended for consistency and ease of deployment across various environments. However, the alternate method provides flexibility for specific use cases or preferences.
+
+
 
 ## Contributing
 
-Contributions to this project are always welcome! If you have any ideas or suggestions, please feel free to submit a pull request or create an issue on the repository. Let's collaborate and make Shopit even better!
 
+We welcome contributions to improve and expand the functionality of this microservices architecture. If you find any issues or have new ideas, please feel free to open an issue or submit a pull request.
+
+Let's secure our microservices with Keycloak and build a safer and more reliable system together!
 
 
 
