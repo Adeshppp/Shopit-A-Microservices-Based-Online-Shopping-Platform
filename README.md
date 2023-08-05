@@ -131,14 +131,36 @@ Please note that basic authentication is suitable for browser-based access but m
 
 With basic authentication in place for the discovery server, our microservices architecture will be better protected against unauthorized access, ensuring a more secure environment for our applications.
 
-## Contributing
+## Circuit Breaker
 
+The Circuit Breaker pattern is mainly used when we want to ensure resilient communication between our services.
+
+<img width="677" alt="Screenshot 2023-08-04 at 10 42 33 PM" src="https://github.com/Adeshppp/Shopit-A-Microservices-Based-Online-Shopping-Platform/assets/60222871/0f22667d-ee13-4f2c-a7a9-67ddc7172902">
+
+In our microservices architecture, the order service communicates with the inventory service to check the availability of products using a Web Client, which operates like synchronous communication. However, synchronous communication poses certain challenges. The inventory service may not always be available, and there might be delays in its response when called from the order service. Additionally, remote service calls can be slow if something goes wrong with the inventory service, such as performance issues or database problems, resulting in slow API calls.
+
+To address these potential issues and ensure system resilience, we need to handle failures gracefully and avoid abrupt terminations of requests. We aim to "fail fast" and provide resiliency to cope with these challenges in a microservice environment.
+
+The Circuit Breaker pattern is a mechanism that helps us achieve this goal. It involves maintaining a set of states within our application to manage potential failures in remote service calls.
+
+By implementing the Circuit Breaker pattern, we can improve the stability and reliability of our microservices architecture, ensuring that our system can gracefully handle issues and maintain responsiveness.
+
+### State Diagram of Circuit Breaker Pattern
+
+<img width="586" alt="Screenshot 2023-08-04 at 10 47 54 PM" src="https://github.com/Adeshppp/Shopit-A-Microservices-Based-Online-Shopping-Platform/assets/60222871/5b49cd7b-c174-4927-acd1-f1298ae59660">
+
+As shown in the above diagram of circuit breaker states, the Circuit Breaker pattern helps manage communication failures between services. In our case, the order service and the inventory service communicate with each other. If there is a failure of communication due to a network issue or a database problem, the circuit breaker enters the "open" state from the "closed" state and prevents calls from the order service to the inventory service for a certain amount of time. The duration of this period can be configured according to our needs. During this time, the circuit breaker can either throw an error message or execute a fallback logic to handle the situation gracefully.
+
+After the specified time period, the circuit breaker enters the "half-open" state and begins to check whether the requests are going through successfully by gradually allowing some API calls from the order service to the inventory service. If these requests are executed successfully, the circuit breaker transitions back to the "closed" state, indicating that the communication is restored and reliable. However, if the requests continue to fail, the circuit breaker will revert to the "open" state, ensuring that further calls to the inventory service are blocked until it's safe to retry.
+
+The Circuit Breaker pattern helps protect the overall system from cascading failures and ensures that the communication between microservices remains robust and resilient.
+
+To implement this logic we are using Resilience4J library.
+
+## Contributing
 
 We welcome contributions to improve and expand the functionality of this microservices architecture. If you find any issues or have new ideas, please feel free to open an issue or submit a pull request.
 
 Let's secure our microservices with Keycloak and build a safer and more reliable system together!
-
-
-## Authentication mechanism for discovery server
 
 
