@@ -5,6 +5,7 @@ import com.OnlineShopping.inventoryservice.dto.ProductRequest;
 import com.OnlineShopping.inventoryservice.model.Inventory;
 import com.OnlineShopping.inventoryservice.repository.InventoryRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,12 @@ public class InventoryService {
     @Autowired
     private final InventoryRepository inventoryRepository;
 
+    @SneakyThrows //demo purpose
     @Transactional(readOnly = true)
     public List<InventoryResponse> isInStock(List<String> skuCode){
+        log.info("Wait started");
+        Thread.sleep(10000);
+        log.info("Wait ended");
         return inventoryRepository.findBySkuCodeIn(skuCode)
                 .stream()
                 .map(inventory ->
