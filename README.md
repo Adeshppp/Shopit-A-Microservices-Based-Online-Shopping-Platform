@@ -190,6 +190,8 @@ I have used below command to run docker container.
 
 ``` docker run -d -p 9411:9411 openzipkin/zipkin ```
 
+You can access Zipkin on port 9411 by hitting: http://localhost:9411
+
 ## Contributing
 
 We welcome contributions to improve and expand the functionality of this microservices architecture. If you find any issues or have new ideas, please feel free to open an issue or submit a pull request.

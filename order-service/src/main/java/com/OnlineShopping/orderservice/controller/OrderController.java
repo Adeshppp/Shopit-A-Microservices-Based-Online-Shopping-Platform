@@ -3,6 +3,9 @@ package com.OnlineShopping.orderservice.controller;
 
 import com.OnlineShopping.orderservice.dto.OrderRequest;
 import com.OnlineShopping.orderservice.service.OrderService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,15 +23,15 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-//    @CircuitBreaker(name="inventory", fallbackMethod = "fallbackMethod")
-//    @TimeLimiter(name="inventory")
-//    @Retry(name="inventory")
-//    public CompletableFuture<String> placeOrder(@RequestBody OrderRequest orderRequest){
-//        return CompletableFuture.supplyAsync(()->orderService.placeOrder(orderRequest));
-//    }
-    public String placeOrder(@RequestBody OrderRequest orderRequest){
-        return orderService.placeOrder(orderRequest);
+    @CircuitBreaker(name="inventory", fallbackMethod = "fallbackMethod")
+    @TimeLimiter(name="inventory")
+    @Retry(name="inventory")
+    public CompletableFuture<String> placeOrder(@RequestBody OrderRequest orderRequest){
+        return CompletableFuture.supplyAsync(()->orderService.placeOrder(orderRequest));
     }
+//    public String placeOrder(@RequestBody OrderRequest orderRequest){
+//        return orderService.placeOrder(orderRequest);
+//    }
     public CompletableFuture<String> fallbackMethod(OrderRequest orderRequest, RuntimeException runtimeException){
         return CompletableFuture.supplyAsync(()->"Oops! Something went wrong, please try after some time!");
     }
