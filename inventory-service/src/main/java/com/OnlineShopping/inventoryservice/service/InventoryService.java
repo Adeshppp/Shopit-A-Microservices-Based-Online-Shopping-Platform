@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -24,9 +25,9 @@ public class InventoryService {
     @SneakyThrows //demo purpose
     @Transactional(readOnly = true)
     public List<InventoryResponse> isInStock(List<String> skuCode){
-        log.info("Wait started");
-        Thread.sleep(10000);
-        log.info("Wait ended");
+//        log.info("Wait started");
+//        Thread.sleep(10000);
+//        log.info("Wait ended");
         return inventoryRepository.findBySkuCodeIn(skuCode)
                 .stream()
                 .map(inventory ->
@@ -39,26 +40,33 @@ public class InventoryService {
     }
 
     @Transactional
-    public void addProductInInventory(ProductRequest productRequest) {
+    public String addProductInInventory(ProductRequest productRequest) {
         Inventory inventory = inventoryRepository.findBySkuCode(productRequest.getSkuCode());
 
-        if(inventory != null) log.error("Product with sku code {} already present", productRequest.getSkuCode());
+        if(inventory != null) {
+            log.error("Product with sku code {} already present", productRequest.getSkuCode());
+            return ("Product with sku code "+productRequest.getSkuCode()+" already present with count "+ isInStock(Collections.singletonList(productRequest.getSkuCode())).get(0).getAvailableStock());
+
+        }
         else{
             Inventory newInventory = new Inventory();
             newInventory.setSkuCode(productRequest.getSkuCode());
             newInventory.setQuantity(productRequest.getQuantity());
             inventoryRepository.save(newInventory);
-            log.info("Product with sku code {} is successfully added to inventory.", productRequest.getSkuCode());
+            log.info("Product with sku code {} is successfully added to inventory.",productRequest.getSkuCode());
+
         }
+        return ("Product with sku code "+productRequest.getSkuCode()+" is successfully added to inventory.");
     }
 
-    public void addStock(ProductRequest productRequest) {
+    public String addStock(ProductRequest productRequest) {
         Inventory inventory = inventoryRepository.findBySkuCode(productRequest.getSkuCode());
         if(inventory != null){
-            inventory.setQuantity(productRequest.getQuantity());
+            inventory.setQuantity(inventory.getQuantity()+productRequest.getQuantity());
             inventoryRepository.save(inventory);
             log.info("Updated the stock to {} for product {}", productRequest.getQuantity(),productRequest.getSkuCode());
         }
+        return ("Sucessfully added "+productRequest.getQuantity()+" pieces of product "+productRequest.getSkuCode()+" and updated count is "+isInStock(Collections.singletonList(productRequest.getSkuCode())).get(0).getAvailableStock());
     }
 }
 
