@@ -32,14 +32,14 @@ public class InventoryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void addProductInInventory(@RequestBody ProductRequest productRequest){
-        inventoryService.addProductInInventory(productRequest);
+    public String  addProductInInventory(@RequestBody ProductRequest productRequest){
+        return inventoryService.addProductInInventory(productRequest);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void addStock(@RequestBody ProductRequest productRequest){
-        inventoryService.addStock(productRequest);
+    public String addStock(@RequestBody ProductRequest productRequest){
+        return inventoryService.addStock(productRequest);
     }
 
 

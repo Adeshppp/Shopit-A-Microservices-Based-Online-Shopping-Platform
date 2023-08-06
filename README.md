@@ -119,6 +119,7 @@ spring.security.user.name=your_username
 
 spring.security.user.password=your_password
 
+
 Replace your_username and your_password with the desired credentials. The ROLE_USER specifies the role assigned to the authenticated user.
 
 Save the changes and restart the discovery server for the new configuration to take effect.
@@ -156,6 +157,40 @@ After the specified time period, the circuit breaker enters the "half-open" stat
 The Circuit Breaker pattern helps protect the overall system from cascading failures and ensures that the communication between microservices remains robust and resilient.
 
 To implement this logic we are using Resilience4J library.
+
+We can check the health of actuator by hitting http://localhost:52476/actuator/health
+
+replace the port number with the order-service's port number.
+
+## Distributed Tracing with Spring Cloud Sleuth and Zipkin
+
+In our system, we have already implemented the circuit breaker pattern with functionalities such as retry, timeout, and fallback mechanisms, provided by the resilience4j library. This has made our system quite resilient, and we can check logs to track down issues. However, relying solely on logs may not be sufficient in a production setting, where there could be millions of logs to manually inspect. To address this, we have adopted a design pattern called distributed tracing, which helps us track requests from start to end.
+
+<img width="947" alt="Screenshot 2023-08-06 at 5 31 11 AM" src="https://github.com/Adeshppp/Shopit-A-Microservices-Based-Online-Shopping-Platform/assets/60222871/141e4fa5-a242-4c14-9134-1771557c98f0">
+
+### How Distributed Tracing Works
+
+As shown in the diagram above, when a user places an order, the request first passes through an API Gateway, then reaches the order service, and eventually calls the inventory service to check product availability. To trace this flow of requests, we use a trace ID and span ID.
+
+* **Trace ID**: This is a unique identifier assigned to a request. It allows us to track the entire lifecycle of the request.
+
+* **Span ID**: A span represents a trip to a service. For example, in our case, a user placing an order involves three trips. The first trip goes to the API Gateway, the second to the order service, and the last one to the inventory service. Each span has a unique span ID, which helps identify issues that may occur during the request's lifecycle.
+
+### Spring Cloud Sleuth and Zipkin
+
+We have integrated Spring Cloud Sleuth, a distributed tracing framework, into our system. Spring Cloud Sleuth helps generate and propagate trace IDs and span IDs across different services, making it easy to follow the request flow.
+
+To visualize and analyze this tracing information, we use a tool called Zipkin. Zipkin provides a user-friendly interface to view and analyze the traces, helping us quickly identify and troubleshoot any issues that may arise in the system.
+
+By leveraging distributed tracing with Spring Cloud Sleuth and Zipkin, we can gain valuable insights into our system's behavior and ensure a more reliable and efficient production environment.
+
+[to access zipkin I have used docker way](https://zipkin.io/pages/quickstart.html)
+
+I have used below command to run docker container.
+
+``` docker run -d -p 9411:9411 openzipkin/zipkin ```
+
+You can access Zipkin on port 9411 by hitting: http://localhost:9411
 
 ## Contributing
 
