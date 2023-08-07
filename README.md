@@ -192,6 +192,71 @@ I have used below command to run docker container.
 
 You can access Zipkin on port 9411 by hitting: http://localhost:9411
 
+# Event-Driven Architecture with Kafka
+
+In our project architecture, we have implemented an Event-Driven Architecture (EDA) using Kafka to facilitate communication and decouple services. Specifically, we have the following interactions between services:
+
+1. **Order Service and Inventory Service:**
+   - The Order Service interacts with the Inventory Service to check the availability of the requested products before placing an order.
+   - This interaction is synchronous, as the Order Service needs an immediate response from the Inventory Service.
+
+2. **Order Service and Notification Service:**
+   - After successfully placing an order, the Order Service sends a notification to the user as an acknowledgment message.
+   - This interaction is asynchronous, meaning the Order Service does not wait for the Notification Service to respond immediately.
+
+To achieve asynchronous communication, we have integrated Apache Kafka, a distributed event streaming platform, into our architecture. Kafka enables us to build a robust and scalable event-driven system. In our setup, the Order Service acts as the "Producer," while the Notification Service acts as the "Consumer."
+
+### How Kafka Facilitates Asynchronous Communication
+
+1. **Producing Events:**
+   - When the Order Service successfully places an order, it generates an event (e.g., "OrderPlacedEvent") and publishes it to the Kafka broker.
+   - Kafka brokers are responsible for storing and managing events, ensuring durability and replication.
+
+2. **Consuming Events:**
+   - The Notification Service subscribes to the relevant topic on the Kafka broker, waiting for events to be published.
+   - When a new event (e.g., "OrderPlacedEvent") is published, the Notification Service consumes it.
+
+### Advantages of Event-Driven Architecture
+
+- Loose Coupling: Services are decoupled, meaning they can evolve independently without impacting each other significantly.
+- Scalability: Kafka's distributed nature allows for horizontal scaling to handle large event loads.
+- Fault Tolerance: Kafka provides replication and fault-tolerant mechanisms, ensuring events are not lost even if a service or broker fails.
+- Real-time Processing: Asynchronous communication enables real-time event processing, improving system responsiveness.
+
+Our adoption of Event-Driven Architecture using Kafka enhances the robustness and flexibility of our microservices-based online shopping platform, leading to a more efficient and responsive system.
+
+### Event-Driven Architecture Setup
+
+To set up a suitable environment for using Apache Kafka locally, follow these steps:
+
+1. Download the latest stable release of Kafka from the following link: [https://kafka.apache.org/downloads](https://kafka.apache.org/downloads). Downloading the **Kafka binary distribution** provides a pre-compiled and ready-to-use version of Kafka, eliminating the need to compile and build the code.
+
+2. Kafka uses ZooKeeper for managing its brokers and maintaining metadata. To start ZooKeeper, open a terminal and navigate to the downloaded and extracted Kafka folder. Run the following command:
+
+   ```bash
+   bin/zookeeper-server-start.sh config/zookeeper.properties
+   ```
+
+   Keep this terminal running as ZooKeeper will continue running in the background.
+
+3. After ZooKeeper is running, open another terminal tab in the same Kafka folder and start the Kafka broker by running the following command:
+
+   ```bash
+   bin/kafka-server-start.sh config/server.properties
+   ```
+
+   Keep this terminal running as well. The Kafka broker is now up and running.
+
+4. Next, we need to create a Kafka topic to which the producer (order service) will send messages, and the consumer (notification service) will read from. In a new terminal tab (still in the Kafka folder), run the following command, replacing "test_topic" with your desired topic name. This name should be the same in both the producer and consumer classes:
+
+   ```bash
+   bin/kafka-topics.sh --create --topic notificationTopic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+   ```
+
+5. Finally, restart the application (order and notification services) to utilize Kafka for event-driven communication.
+
+Make sure to have Kafka running and the topic created before starting your application to ensure smooth communication between the producer and consumer components. With this setup, you can build an event-driven architecture using Apache Kafka for your applications.
+
 ## Contributing
 
 We welcome contributions to improve and expand the functionality of this microservices architecture. If you find any issues or have new ideas, please feel free to open an issue or submit a pull request.
