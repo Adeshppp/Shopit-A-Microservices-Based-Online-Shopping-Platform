@@ -225,13 +225,37 @@ To achieve asynchronous communication, we have integrated Apache Kafka, a distri
 
 Our adoption of Event-Driven Architecture using Kafka enhances the robustness and flexibility of our microservices-based online shopping platform, leading to a more efficient and responsive system.
 
-### Event Driven Architecture Setup
+### Event-Driven Architecture Setup
 
-You can download docker-compose.yml file from this repo and run by using below command in your root directory.
+To set up a suitable environment for using Apache Kafka locally, follow these steps:
 
-``` docker-compose up -d ```
+1. Download the latest stable release of Kafka from the following link: [https://kafka.apache.org/downloads](https://kafka.apache.org/downloads). Downloading the **Kafka binary distribution** provides a pre-compiled and ready-to-use version of Kafka, eliminating the need to compile and build the code.
 
+2. Kafka uses ZooKeeper for managing its brokers and maintaining metadata. To start ZooKeeper, open a terminal and navigate to the downloaded and extracted Kafka folder. Run the following command:
 
+   ```bash
+   bin/zookeeper-server-start.sh config/zookeeper.properties
+   ```
+
+   Keep this terminal running as ZooKeeper will continue running in the background.
+
+3. After ZooKeeper is running, open another terminal tab in the same Kafka folder and start the Kafka broker by running the following command:
+
+   ```bash
+   bin/kafka-server-start.sh config/server.properties
+   ```
+
+   Keep this terminal running as well. The Kafka broker is now up and running.
+
+4. Next, we need to create a Kafka topic to which the producer (order service) will send messages, and the consumer (notification service) will read from. In a new terminal tab (still in the Kafka folder), run the following command, replacing "test_topic" with your desired topic name. This name should be the same in both the producer and consumer classes:
+
+   ```bash
+   bin/kafka-topics.sh --create --topic notificationTopic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+   ```
+
+5. Finally, restart the application (order and notification services) to utilize Kafka for event-driven communication.
+
+Make sure to have Kafka running and the topic created before starting your application to ensure smooth communication between the producer and consumer components. With this setup, you can build an event-driven architecture using Apache Kafka for your applications.
 
 ## Contributing
 

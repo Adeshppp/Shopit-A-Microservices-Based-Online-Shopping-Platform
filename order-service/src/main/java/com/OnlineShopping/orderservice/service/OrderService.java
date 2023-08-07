@@ -35,6 +35,7 @@ public class OrderService {
 
     private final io.micrometer.tracing.Tracer tracer;
 
+    @Autowired
     private final KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate;
 
     public String placeOrder(OrderRequest orderRequest){
