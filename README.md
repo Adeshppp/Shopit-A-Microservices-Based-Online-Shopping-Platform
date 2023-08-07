@@ -192,6 +192,47 @@ I have used below command to run docker container.
 
 You can access Zipkin on port 9411 by hitting: http://localhost:9411
 
+# Event-Driven Architecture with Kafka
+
+In our project architecture, we have implemented an Event-Driven Architecture (EDA) using Kafka to facilitate communication and decouple services. Specifically, we have the following interactions between services:
+
+1. **Order Service and Inventory Service:**
+   - The Order Service interacts with the Inventory Service to check the availability of the requested products before placing an order.
+   - This interaction is synchronous, as the Order Service needs an immediate response from the Inventory Service.
+
+2. **Order Service and Notification Service:**
+   - After successfully placing an order, the Order Service sends a notification to the user as an acknowledgment message.
+   - This interaction is asynchronous, meaning the Order Service does not wait for the Notification Service to respond immediately.
+
+To achieve asynchronous communication, we have integrated Apache Kafka, a distributed event streaming platform, into our architecture. Kafka enables us to build a robust and scalable event-driven system. In our setup, the Order Service acts as the "Producer," while the Notification Service acts as the "Consumer."
+
+### How Kafka Facilitates Asynchronous Communication
+
+1. **Producing Events:**
+   - When the Order Service successfully places an order, it generates an event (e.g., "OrderPlacedEvent") and publishes it to the Kafka broker.
+   - Kafka brokers are responsible for storing and managing events, ensuring durability and replication.
+
+2. **Consuming Events:**
+   - The Notification Service subscribes to the relevant topic on the Kafka broker, waiting for events to be published.
+   - When a new event (e.g., "OrderPlacedEvent") is published, the Notification Service consumes it.
+
+### Advantages of Event-Driven Architecture
+
+- Loose Coupling: Services are decoupled, meaning they can evolve independently without impacting each other significantly.
+- Scalability: Kafka's distributed nature allows for horizontal scaling to handle large event loads.
+- Fault Tolerance: Kafka provides replication and fault-tolerant mechanisms, ensuring events are not lost even if a service or broker fails.
+- Real-time Processing: Asynchronous communication enables real-time event processing, improving system responsiveness.
+
+Our adoption of Event-Driven Architecture using Kafka enhances the robustness and flexibility of our microservices-based online shopping platform, leading to a more efficient and responsive system.
+
+### Event Driven Architecture Setup
+
+You can download docker-compose.yml file from this repo and run by using below command in your root directory.
+
+``` docker-compose up -d ```
+
+
+
 ## Contributing
 
 We welcome contributions to improve and expand the functionality of this microservices architecture. If you find any issues or have new ideas, please feel free to open an issue or submit a pull request.
