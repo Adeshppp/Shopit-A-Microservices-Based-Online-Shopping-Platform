@@ -38,3 +38,5 @@ build/
 .DS_Store
 
 keycloak-22.0.1
+
+settings.xml
