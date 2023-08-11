@@ -257,6 +257,22 @@ To set up a suitable environment for using Apache Kafka locally, follow these st
 
 Make sure to have Kafka running and the topic created before starting your application to ensure smooth communication between the producer and consumer components. With this setup, you can build an event-driven architecture using Apache Kafka for your applications.
 
+# [Building Java Containers With Jib](https://cloud.google.com/java/getting-started/jib)
+
+
+## How to run the application using Docker
+
+1. Run `mvn clean package -DskipTests` to build the applications and create the docker image locally.
+2. Run `docker-compose up -d` to start the applications.
+
+## How to run the application without Docker
+
+1. Run `mvn clean verify -DskipTests` by going inside each folder to build the applications.
+2. After that run `mvn spring-boot:run` by going inside each folder to start the applications.
+
+
+
+
 ## Contributing
 
 We welcome contributions to improve and expand the functionality of this microservices architecture. If you find any issues or have new ideas, please feel free to open an issue or submit a pull request.
